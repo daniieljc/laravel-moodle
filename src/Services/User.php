@@ -19,16 +19,10 @@ class User extends Service
     public function getAll()
     {
         $arguments = [
-            'criteria' => [
-                [
-                    'key'   => 'email',
-                    'value' => '%%',
-                ],
-            ],
+            'courseid' => '1',
         ];
-        $response = $this->sendRequest('core_user_get_users', $arguments);
-
-        return $this->getUserCollection($response['users']);
+        $response = $this->sendRequest('core_enrol_get_enrolled_users', $arguments);
+        return $this->getUserCollection($response);
     }
 
     /**
@@ -42,7 +36,7 @@ class User extends Service
         $arguments = [
             'criteria' => [
                 [
-                    'key'   => $field,
+                    'key' => $field,
                     'value' => $value,
                 ],
             ],
@@ -131,12 +125,12 @@ class User extends Service
     public function enrolStudent($id_user, $courses)
     {
         $data = array();
-        foreach($courses as $course){
-          $data[] = [
-              'roleid'   => 5,
-              'userid' => $id_user,
-              'courseid' => $course,
-          ];
+        foreach ($courses as $course) {
+            $data[] = [
+                'roleid' => 5,
+                'userid' => $id_user,
+                'courseid' => $course,
+            ];
         }
 
         $arguments = [
