@@ -28,9 +28,10 @@ class RestClient extends BaseAdapter
      * @param Connection $connection
      * @param string $responseFormat
      */
-    public function __construct(Connection $connection, $responseFormat = self::RESPONSE_FORMAT_JSON)
+    public function __construct($responseFormat = self::RESPONSE_FORMAT_JSON)
     {
-        parent::__construct($connection);
+        $config = config('laravel-moodle');
+        parent::__construct(new Connection($config['url'], $config['token'], [], $config['format']));
         $this->setResponseFormat($responseFormat);
     }
 
@@ -44,8 +45,8 @@ class RestClient extends BaseAdapter
     {
         $configuration = [
             self::OPTION_FUNCTION => $function,
-            self::OPTION_FORMAT   => $this->responseFormat,
-            self::OPTION_TOKEN    => $this->getConnection()->getToken(),
+            self::OPTION_FORMAT => $this->responseFormat,
+            self::OPTION_TOKEN => $this->getConnection()->getToken(),
         ];
 
         $response = $this->getClient()->post(array_merge($configuration, $arguments));
