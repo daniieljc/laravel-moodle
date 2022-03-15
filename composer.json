@@ -2,7 +2,7 @@
   "name": "daniieljc/laravel-moodle",
   "description": "Laravel Moodle Client",
   "license": "MIT",
-  "version": "0.1",
+  "version": "0.0.1",
   "authors": [
     {
       "name": "Daniel Jimenez",
