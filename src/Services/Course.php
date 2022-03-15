@@ -20,7 +20,17 @@ class Course extends Service
     public function getAll(array $ids = [])
     {
         $response = $this->sendRequest('core_course_get_courses', ['options' => ['ids' => $ids]]);
+        return $this->getCourseCollection($response);
+    }
 
+    /**
+     * Get students enrolled in a course
+     * @param $courseId
+     * @return CourseCollection
+     */
+    public function getCourseEnRolledUser($courseId)
+    {
+        $response = $this->sendRequest('core_enrol_get_enrolled_users', ['courseid' => $courseId]);
         return $this->getCourseCollection($response);
     }
 
