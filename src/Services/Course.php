@@ -28,18 +28,7 @@ class Course extends Service
      * @param $courseId
      * @return CourseCollection
      */
-    public function getCourseEnRolledUser($courseId)
-    {
-        $response = $this->sendRequest('core_enrol_get_enrolled_users', ['courseid' => $courseId]);
-        return $this->getCourseCollection($response);
-    }
-
-    /**
-     * @param $course
-     * @param $options
-     * @return CourseCollection
-     */
-    public function getEnRolledUsers($course, $options = null)
+    public function getCourseEnRolledUser($courseId, $options = null)
     {
         /**
          *
@@ -54,8 +43,8 @@ class Course extends Service
         if ($options != null) {
             $searchOptions = $options;
         }
-        $response = $this->sendRequest('core_enrol_get_enrolled_users', ['courseid' => $course,
-            'options' => $searchOptions
+        $response = $this->sendRequest('core_enrol_get_enrolled_users', ['courseid' => $courseId,
+            'options' => [$searchOptions]
         ]);
         return $this->getCourseCollection($response);
     }
