@@ -35,6 +35,32 @@ class Course extends Service
     }
 
     /**
+     * @param $course
+     * @param $options
+     * @return CourseCollection
+     */
+    public function getEnRolledUsers($course, $options = null)
+    {
+        /**
+         *
+         * 'options' => [
+         * [
+         * 'name' => 'onlyactive',
+         * 'value' => 1
+         * ]
+         * ]
+         */
+        $searchOptions = [];
+        if ($options != null) {
+            $searchOptions = $options;
+        }
+        $response = $this->sendRequest('core_enrol_get_enrolled_users', ['courseid' => $course,
+            'options' => $searchOptions
+        ]);
+        return $this->getCourseCollection($response);
+    }
+
+    /**
      * Get course by field
      * @param $field
      * @param $value
@@ -48,7 +74,6 @@ class Course extends Service
         ];
 
         $response = $this->sendRequest('core_course_get_courses_by_field', $arguments);
-
         return $this->getCourseCollection($response['courses']);
     }
 
@@ -65,7 +90,6 @@ class Course extends Service
                 'courses' => $this->prepareEntityForSending(...$courses)
             ]
         );
-
         return $this->getCourseCollection($response);
     }
 
@@ -77,7 +101,6 @@ class Course extends Service
     public function delete(array $ids = [])
     {
         $response = $this->sendRequest('core_course_delete_courses', ['courseids' => $ids]);
-
         return $response;
     }
 
